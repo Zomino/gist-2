@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "express": "^4.17.3"
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "passport-steam": "^1.0.17"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
