@@ -1,7 +1,13 @@
 import express from 'express';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
 import { session, passport, router } from 'middleware';
-import { serverPort as port, serverURL as URL } from 'environment';
+import {
+  serverPort,
+  serverURL,
+  databasePort,
+  databaseName,
+} from 'environment';
 
 const app = express();
 
@@ -13,4 +19,11 @@ app.use(passport.initialize());
 app.use(passport.session()); // changes user property on req object from session ID to user object
 app.use(router);
 
-app.listen(port, () => console.log(`server: ${URL}`));
+(async function bootstrap() {
+  try {
+    await mongoose.connect(`mongodb://localhost:${databasePort}/${databaseName}`);
+    app.listen(serverPort, () => console.log(`server: ${serverURL}`));
+  } catch (error) {
+    console.error(error);
+  }
+}());
