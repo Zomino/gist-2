@@ -3,14 +3,13 @@ import dotenv from 'dotenv';
 function getValue(name: string) {
   const value = process.env[name];
 
-  if (!value) throw new Error(`missing env var for ${name}`);
+  if (!value) throw new Error(`missing environment variable for ${name}`);
 
   return value;
 }
 
 dotenv.config();
 
-export const nodeEnvironment = getValue('NODE_ENV');
 export const serverHost = getValue('SERVER_HOST');
 export const serverPort = getValue('SERVER_PORT');
 export const databaseHost = getValue('DATABASE_HOST');

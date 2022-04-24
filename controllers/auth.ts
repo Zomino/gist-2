@@ -1,13 +1,13 @@
 import { type Request, type Response } from 'express';
-import { Routes } from 'middleware/router';
+import { HomeRoutes } from 'middleware/router';
 
-export function redirectHome(_: Request, res: Response) {
-  res.redirect(Routes.Home);
+function redirectHome(_: Request, res: Response) {
+  res.redirect(HomeRoutes.BASE);
 }
 
-export function logout(req: Request, res: Response) {
+function logout(req: Request, res: Response) {
   req.logout();
-  res.redirect(Routes.Home);
+  res.redirect(HomeRoutes.BASE);
 }
 
 export default {

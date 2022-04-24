@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import { session, passport, router } from 'middleware';
 import {
-  nodeEnvironment,
   serverPort,
   databaseHost,
   databasePort,
@@ -25,6 +24,6 @@ app.use(router);
   console.log('Connected to database');
 
   app.listen(serverPort, () => {
-    if (nodeEnvironment === 'development') console.log(`Server running at http://localhost:${serverPort}`);
+    console.log(`Server running on port ${serverPort}`);
   });
 }());

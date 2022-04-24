@@ -1,9 +1,8 @@
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import { serverHost, serverPort, steamAPIKey as APIKey } from 'environment';
-import { Routes } from './router';
+import { AuthRoutes } from './router';
 
-// types
 interface User { }
 interface Profile { identifier: string }
 
@@ -14,18 +13,13 @@ type Validate = (
 ) => void
 
 // configure session management
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user: User, done) => {
-  done(null, user);
-});
+passport.serializeUser((user, done) => { done(null, user); });
+passport.deserializeUser((user: User, done) => { done(null, user); });
 
 // configure passport
 const serverURL = `http://${serverHost}:${serverPort}`;
 const options = {
-  returnURL: `${serverURL}${Routes.LoginReturn}`,
+  returnURL: `${serverURL}${AuthRoutes.BASE}${AuthRoutes.LOGIN_RETURN}`,
   realm: serverURL,
   apiKey: APIKey,
 };
