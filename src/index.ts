@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import path from 'path';
 import { session, passport, router } from 'middleware';
 import {
   serverPort,
@@ -12,6 +13,7 @@ import {
 const app = express();
 
 app.set('view-engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
 
 app.use(morgan('tiny')); // logs request information
 app.use(session); // adds user session to req object and sets cookies

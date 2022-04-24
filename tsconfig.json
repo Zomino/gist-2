@@ -5,7 +5,7 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "outDir": "dist"
+    "baseUrl": "src",
+    "outDir": "dist",
   }
 }
