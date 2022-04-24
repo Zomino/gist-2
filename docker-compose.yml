@@ -1,0 +1,23 @@
+services:
+ app:
+  container_name: app
+  build: .
+  ports:
+   - "${SERVER_PORT}:${SERVER_PORT}"
+  environment:
+   - DATABASE_HOST=mongo
+  volumes:
+   - .:/app
+
+  command: npm run dev
+
+ mongo:
+  container_name: database
+  image: mongo:5
+  ports:
+   - ${DATABASE_PORT}:${DATABASE_PORT}
+  volumes:
+   - mongodb:/data/db
+
+volumes:
+ mongodb:

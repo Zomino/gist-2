@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
-import { serverURL as URL, steamAPIKey as APIKey } from 'environment';
+import { serverHost, serverPort, steamAPIKey as APIKey } from 'environment';
 import { Routes } from './router';
 
 // types
@@ -23,9 +23,10 @@ passport.deserializeUser((user: User, done) => {
 });
 
 // configure passport
+const serverURL = `http://${serverHost}:${serverPort}`;
 const options = {
-  returnURL: `${URL}${Routes.LoginReturn}`,
-  realm: URL,
+  returnURL: `${serverURL}${Routes.LoginReturn}`,
+  realm: serverURL,
   apiKey: APIKey,
 };
 

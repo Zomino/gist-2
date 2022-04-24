@@ -3,8 +3,9 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import { session, passport, router } from 'middleware';
 import {
+  nodeEnvironment,
   serverPort,
-  serverURL,
+  databaseHost,
   databasePort,
   databaseName,
 } from 'environment';
@@ -20,10 +21,10 @@ app.use(passport.session()); // changes user property on req object from session
 app.use(router);
 
 (async function bootstrap() {
-  try {
-    await mongoose.connect(`mongodb://localhost:${databasePort}/${databaseName}`);
-    app.listen(serverPort, () => console.log(`server: ${serverURL}`));
-  } catch (error) {
-    console.error(error);
-  }
+  await mongoose.connect(`mongodb://${databaseHost}:${databasePort}/${databaseName}`);
+  console.log('Connected to database');
+
+  app.listen(serverPort, () => {
+    if (nodeEnvironment === 'development') console.log(`Server running at http://localhost:${serverPort}`);
+  });
 }());

@@ -1,19 +1,20 @@
 import dotenv from 'dotenv';
 
+function getValue(name: string) {
+  const value = process.env[name];
+
+  if (!value) throw new Error(`missing env var for ${name}`);
+
+  return value;
+}
+
 dotenv.config();
 
-export const serverPort = process.env.SERVER_PORT || 3000;
-export const serverURL = `http://localhost:${serverPort}`;
-export const steamAPIKey = process.env.STEAM_API_KEY;
-export const expressSessionSecret = process.env.EXPRESS_SESSION_SECRET || 'banana';
-export const databasePort = process.env.DATABASE_PORT || 27017;
-export const databaseName = process.env.DATABASE_NAME || 'gist2';
-
-export default {
-  serverPort,
-  serverURL,
-  steamAPIKey,
-  expressSessionSecret,
-  databasePort,
-  databaseName,
-};
+export const nodeEnvironment = getValue('NODE_ENV');
+export const serverHost = getValue('SERVER_HOST');
+export const serverPort = getValue('SERVER_PORT');
+export const databaseHost = getValue('DATABASE_HOST');
+export const databasePort = getValue('DATABASE_PORT');
+export const databaseName = getValue('DATABASE_NAME');
+export const expressSessionSecret = getValue('EXPRESS_SESSION_SECRET');
+export const steamAPIKey = getValue('STEAM_API_KEY');
