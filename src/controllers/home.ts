@@ -6,6 +6,7 @@ function render(req: Request, res: Response) {
     user: req.user,
     login: `${AuthRoutes.BASE}${AuthRoutes.LOGIN}`,
     logout: `${AuthRoutes.BASE}${AuthRoutes.LOGOUT}`,
+    title: 'Home',
   };
 
   res.render('home.ejs', data);
