@@ -4,20 +4,24 @@ services:
   build: .
   ports:
    - "${SERVER_PORT}:${SERVER_PORT}"
-  environment:
-   - DATABASE_HOST=mongo
   volumes:
    - .:/app
-
+  environment:
+   - DATABASE_HOST=database
+   - DATABASE_DIALECT=postgres
   command: npm run dev
 
- mongo:
+ database:
   container_name: database
-  image: mongo:5
+  image: postgres:14
   ports:
    - ${DATABASE_PORT}:${DATABASE_PORT}
   volumes:
-   - mongodb:/data/db
+   - postgres-data:/var/lib/postgresql/data
+  environment:
+   - POSTGRES_USER=${DATABASE_USER}
+   - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+   - POSTGRES_DB=${DATABASE_NAME}
 
 volumes:
- mongodb:
+ postgres-data:

@@ -1,15 +1,10 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
 import morgan from 'morgan';
-import mongoose from 'mongoose';
 import path from 'path';
 import { session, passport, router } from 'middleware';
-import {
-  serverPort,
-  databaseHost,
-  databasePort,
-  databaseName,
-} from 'environment';
+import sequelize from 'models';
+import { serverPort } from 'environment';
 
 const app = express();
 
@@ -33,7 +28,7 @@ app.use(morgan('tiny')); // logs request information
 app.use(router);
 
 (async function bootstrap() {
-  await mongoose.connect(`mongodb://${databaseHost}:${databasePort}/${databaseName}`);
+  await sequelize.authenticate();
   console.log('Connected to database');
 
   app.listen(serverPort, () => {
