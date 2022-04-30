@@ -2,7 +2,6 @@ import { type Request, type Response, type NextFunction } from 'express';
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import { serverHost, serverPort, steamAPIKey as APIKey } from 'environment';
-import { AuthRoutes } from './router/routes';
 
 export interface ExpressUser {}
 
@@ -27,7 +26,7 @@ passport.deserializeUser((user: ExpressUser, done) => { done(null, user); });
 // configure passport
 const serverURL = `http://${serverHost}:${serverPort}`;
 const options = {
-  returnURL: `${serverURL}${AuthRoutes.BASE}${AuthRoutes.LOGIN_RETURN}`,
+  returnURL: `${serverURL}/auth/login/return`,
   realm: serverURL,
   apiKey: APIKey,
 };
