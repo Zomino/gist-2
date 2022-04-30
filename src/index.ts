@@ -1,4 +1,5 @@
 import express from 'express';
+import expressEjsLayouts from 'express-ejs-layouts';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import path from 'path';
@@ -12,9 +13,16 @@ import {
 
 const app = express();
 
-app.set('view-engine', 'ejs');
-app.set('views', path.join(__dirname, '/views'));
+// Static Files
+app.use(express.static('public'));
+app.use('/css', express.static('css'));
 
+// Views
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+app.use(expressEjsLayouts);
+
+// Other
 app.use(morgan('tiny')); // logs request information
 app.use(session); // adds user session to req object and sets cookies
 app.use(passport.initialize());

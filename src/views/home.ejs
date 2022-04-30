@@ -1,7 +1,12 @@
-<h1>Gist</h1>
-<% if (!user) { %>
-  <a href=<%= login %>>Log in with Steam</a>
-<% }  else { %>
-  <p>Hello <%= user.displayName %></p>
-  <a href=<%= logout %>>Logout</a>
-<% } %>
+<head>
+  <%- include('partials/head.ejs', { title }) %>
+</head>
+<body>
+  <h1>Gist</h1>
+  <% if (!user) { %>
+    <a href=<%= login %>>Log in with Steam</a>
+  <% }  else { %>
+    <p>Hello <%= user.displayName %></p>
+    <a href=<%= logout %>>Logout</a>
+  <% } %>
+</body>
