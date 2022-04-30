@@ -24,6 +24,7 @@ app.use(expressEjsLayouts);
 
 // Authentication
 app.use(session); // adds user session to req object and sets cookies
+
 app.use(passport.initialize());
 app.use(passport.session()); // changes user property on req object from session ID to user object
 
