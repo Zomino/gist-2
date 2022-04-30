@@ -1,17 +1,11 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { auth } from 'controllers';
-
-export enum AuthRoutes {
-  BASE = '/auth',
-  LOGIN = '/login',
-  LOGIN_RETURN = '/login/return',
-  LOGOUT = '/logout',
-}
+import { AuthRoutes } from './routes';
 
 const STEAM_STRATEGY = 'steam';
 
-const authRouter = Router({ mergeParams: true });
+const authRouter = Router();
 
 authRouter.get(
   AuthRoutes.LOGIN,

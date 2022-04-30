@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { home } from 'controllers';
-
-export enum HomeRoutes {
-  BASE = '/',
-}
+import { redirectIfNotAuthenticated } from 'middleware/passport';
 
 const homeRouter = Router();
 
-homeRouter.get('', home.render);
+homeRouter.get(
+  '',
+  redirectIfNotAuthenticated,
+  home.render,
+);
 
 export default homeRouter;

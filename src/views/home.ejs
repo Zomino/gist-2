@@ -1,13 +1,12 @@
-<head><%- include('partials/head.ejs', { heading }) %></head>
+<head><%- include('partials/head.ejs', { pageHeading }) %></head>
 <body>
-  <header><%- include('partials/header.ejs', { heading }) %></header>
+  <header>
+    <%- include('partials/heading-1.ejs', { pageHeading }) %>
+    <%- include('partials/navigation-bar.ejs') %>
+  </header>
   <main>
-    <% if (!user) { %>
-      <a href=<%= login %>>Log in with Steam</a>
-    <% }  else { %>
       <p>Hello <%= user.displayName %></p>
       <a href=<%= logout %>>Logout</a>
-    <% } %>
   </main>
-  <footer><%- include('partials/footer.ejs') %></footer>
+  <footer><%- include('partials/copyright-notice.ejs') %></footer>
 </body>

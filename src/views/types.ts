@@ -1,8 +1,14 @@
-import { ExpressUser } from 'middleware';
+import { ExpressUser } from 'middleware/passport';
 
-export interface HomeData {
-  heading: string
+interface PageData {
+  pageHeading: string
+}
+
+export interface LoginPageData extends PageData {
   login: string
+}
+
+export interface HomePageData extends PageData {
   logout: string
   user?: ExpressUser
 }

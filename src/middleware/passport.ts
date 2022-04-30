@@ -1,7 +1,8 @@
+import { type Request, type Response, type NextFunction } from 'express';
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import { serverHost, serverPort, steamAPIKey as APIKey } from 'environment';
-import { AuthRoutes } from './router';
+import { AuthRoutes } from './router/routes';
 
 export interface ExpressUser {}
 
@@ -12,6 +13,12 @@ type Validate = (
   profile: Profile,
   done: (err: null, profile: Profile) => void,
 ) => void
+
+type Middleware = (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => void;
 
 // configure session management
 passport.serializeUser((user, done) => { done(null, user); });
@@ -33,5 +40,15 @@ const validate: Validate = (identifier, profile, done) => { // called with passp
 };
 
 passport.use(new SteamStrategy(options, validate));
+
+export const redirectIfNotAuthenticated: Middleware = (request, response, next) => {
+  if (!request.isAuthenticated()) return response.redirect('/login');
+  return next();
+};
+
+export const redirectIfAuthenticated: Middleware = (request, response, next) => {
+  if (request.isAuthenticated()) return response.redirect('/');
+  return next();
+};
 
 export default passport;

@@ -1,16 +1,15 @@
 import { type Request, type Response } from 'express';
-import { type HomeData } from 'views/types';
-import { AuthRoutes } from 'middleware/router';
+import { type HomePageData } from 'views/types';
+import { AuthRoutes } from 'middleware/router/routes';
 
-function render(req: Request, res: Response) {
-  const data: HomeData = {
-    user: req.user,
-    login: `${AuthRoutes.BASE}${AuthRoutes.LOGIN}`,
+function render(request: Request, response: Response) {
+  const data: HomePageData = {
+    user: request.user,
     logout: `${AuthRoutes.BASE}${AuthRoutes.LOGOUT}`,
-    heading: 'Home',
+    pageHeading: 'Home',
   };
 
-  res.render('home.ejs', data);
+  response.render('home.ejs', data);
 }
 
 export default {
