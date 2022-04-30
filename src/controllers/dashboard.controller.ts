@@ -1,14 +1,14 @@
 import { type Request, type Response } from 'express';
-import { type HomePageData } from 'views/types';
+import { type DashboardPageData } from 'views/types';
 
 function render(request: Request, response: Response) {
-  const data: HomePageData = {
+  const data: DashboardPageData = {
     user: request.user,
     logout: 'auth/logout',
-    pageHeading: 'Home',
+    pageHeading: 'Dashboard',
   };
 
-  response.render('home.ejs', data);
+  response.render('dashboard.ejs', data);
 }
 
 export default {

@@ -8,7 +8,7 @@ export interface LoginPageData extends PageData {
   login: string
 }
 
-export interface HomePageData extends PageData {
+export interface DashboardPageData extends PageData {
   logout: string
   user?: ExpressUser
 }
