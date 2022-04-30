@@ -1,4 +1,4 @@
-import { ExpressUser } from 'middleware/passport';
+import { type ExpressUser } from 'middleware/passport/types';
 
 interface PageData {
   pageHeading: string

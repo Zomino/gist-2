@@ -1,11 +1,5 @@
 import { model, Schema } from 'mongoose';
-
-export interface User {
-  steamID: number
-  username: string
-  friendIDs: (typeof Schema.Types.ObjectId)[]
-  listIDs: (typeof Schema.Types.ObjectId)[]
-}
+import { type User } from './types';
 
 const UserSchema = new Schema<User>({
   steamID: {

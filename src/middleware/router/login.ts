@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { login } from 'controllers';
-import { redirectIfAuthenticated } from 'middleware/passport';
+import { redirect } from 'middleware/passport';
 
 const loginRouter = Router();
 
 loginRouter.get(
   '',
-  redirectIfAuthenticated,
+  redirect.ifAuthenticated,
   login.render,
 );
 

@@ -1,9 +1,7 @@
-import { type Request, type Response, type NextFunction } from 'express';
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import { serverHost, serverPort, steamAPIKey as APIKey } from 'environment';
-
-export interface ExpressUser {}
+import { type ExpressUser } from './types';
 
 interface Profile { identifier: string }
 
@@ -13,17 +11,10 @@ type Validate = (
   done: (err: null, profile: Profile) => void,
 ) => void
 
-type Middleware = (
-  request: Request,
-  response: Response,
-  next: NextFunction,
-) => void;
-
 // configure session management
 passport.serializeUser((user, done) => { done(null, user); });
 passport.deserializeUser((user: ExpressUser, done) => { done(null, user); });
 
-// configure passport
 const serverURL = `http://${serverHost}:${serverPort}`;
 const options = {
   returnURL: `${serverURL}/auth/login/return`,
@@ -31,7 +22,7 @@ const options = {
   apiKey: APIKey,
 };
 
-const validate: Validate = (identifier, profile, done) => { // called with passport.authenticate
+const validate: Validate = (identifier, profile, done) => { // called on passport.authenticate
   process.nextTick(() => {
     profile.identifier = identifier; // identifier is steam profile URL e.g. https://steamcommunity.com/openid/id/XXXXXXXXXXXXXXXXX
     return done(null, profile);
@@ -39,15 +30,5 @@ const validate: Validate = (identifier, profile, done) => { // called with passp
 };
 
 passport.use(new SteamStrategy(options, validate));
-
-export const redirectIfNotAuthenticated: Middleware = (request, response, next) => {
-  if (!request.isAuthenticated()) return response.redirect('/login');
-  return next();
-};
-
-export const redirectIfAuthenticated: Middleware = (request, response, next) => {
-  if (request.isAuthenticated()) return response.redirect('/');
-  return next();
-};
 
 export default passport;

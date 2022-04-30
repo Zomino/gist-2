@@ -22,11 +22,13 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(expressEjsLayouts);
 
-// Other
-app.use(morgan('tiny')); // logs request information
+// Authentication
 app.use(session); // adds user session to req object and sets cookies
 app.use(passport.initialize());
 app.use(passport.session()); // changes user property on req object from session ID to user object
+
+// Other
+app.use(morgan('tiny')); // logs request information
 app.use(router);
 
 (async function bootstrap() {
