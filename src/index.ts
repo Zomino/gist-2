@@ -9,7 +9,7 @@ import { serverPort } from 'environment';
 const app = express();
 
 // Static Files
-app.use(express.static('public'));
+app.use(express.static('src/public'));
 app.use('/css', express.static('css'));
 
 // Views
