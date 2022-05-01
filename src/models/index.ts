@@ -7,10 +7,12 @@ import {
   databasePassword,
   databasePort,
 } from 'environment';
+import User from './User';
 
 const options = {
   host: databaseHost,
   dialect: databaseDialect as Dialect,
+  logging: false,
   port: Number(databasePort),
   pool: {
     max: 5,
@@ -24,5 +26,7 @@ const sequelize = new Sequelize(
   databasePassword,
   options,
 );
+
+User.initialize(sequelize);
 
 export default sequelize;

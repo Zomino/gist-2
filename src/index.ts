@@ -28,6 +28,8 @@ app.use(morgan('tiny')); // logs request information
 app.use(router);
 
 (async function bootstrap() {
+  await sequelize.sync();
+  console.log('Models synchronized');
   await sequelize.authenticate();
   console.log('Connected to database');
 
