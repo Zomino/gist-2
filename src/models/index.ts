@@ -7,6 +7,7 @@ import {
   databasePassword,
   databasePort,
 } from 'environment';
+import Game from './Game';
 import List from './List';
 import User from './User';
 
@@ -28,6 +29,7 @@ const sequelize = new Sequelize(
   options,
 );
 
+Game.initialize(sequelize);
 List.initialize(sequelize);
 User.initialize(sequelize);
 

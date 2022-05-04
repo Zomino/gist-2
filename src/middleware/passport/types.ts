@@ -1,1 +1,3 @@
-export interface ExpressUser { }
+export interface ExpressUser {
+  id?: string
+}

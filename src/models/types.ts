@@ -1,3 +1,7 @@
+export interface Game {
+  name: string
+}
+
 export interface List {
   name: string
 }

@@ -1,0 +1,13 @@
+<head><%- include('partials/head.ejs', { pageHeading }) %></head>
+<body>
+  <header>
+    <%- include('partials/heading-1.ejs', { pageHeading }) %>
+    <%- include('partials/navigation-bar.ejs') %>
+  </header>
+  <main>
+      <% lists.forEach((list) => { %>
+        <%= list %>
+      <% }); %>
+  </main>
+  <footer><%- include('partials/copyright-notice.ejs') %></footer>
+</body>
