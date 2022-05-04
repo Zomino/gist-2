@@ -1,21 +1,22 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type User } from './types';
+import { type List } from './types';
 
-class UserModel extends Model implements User {
-  declare steamID: string;
+class ListModel extends Model implements List {
+  declare name: string;
 }
 
 function initialize(sequelize: Sequelize) {
   const attributes = {
-    steamID: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
   };
 
   const options = { sequelize };
 
-  UserModel.init(attributes, options);
+  ListModel.init(attributes, options);
 }
 
 export default {

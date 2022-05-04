@@ -7,6 +7,7 @@ import {
   databasePassword,
   databasePort,
 } from 'environment';
+import List from './List';
 import User from './User';
 
 const options = {
@@ -27,6 +28,7 @@ const sequelize = new Sequelize(
   options,
 );
 
+List.initialize(sequelize);
 User.initialize(sequelize);
 
 export default sequelize;
