@@ -3,7 +3,7 @@ import expressEjsLayouts from 'express-ejs-layouts';
 import morgan from 'morgan';
 import path from 'path';
 import { session, passport, router } from 'middleware';
-import sequelize from 'models';
+import { sequelize } from 'models';
 import { serverPort } from 'environment';
 
 const app = express();
@@ -21,6 +21,7 @@ app.use(expressEjsLayouts);
 app.use(session); // adds user session to req object and sets cookies
 
 app.use(passport.initialize());
+app.use(express.json());
 app.use(passport.session()); // changes user property on req object from session ID to user object
 
 // Other

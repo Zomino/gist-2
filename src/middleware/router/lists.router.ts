@@ -10,4 +10,10 @@ loginRouter.get(
   lists.render,
 );
 
+loginRouter.post(
+  '',
+  // redirect.ifNotAuthenticated,
+  lists.create,
+);
+
 export default loginRouter;

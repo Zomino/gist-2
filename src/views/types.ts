@@ -1,5 +1,5 @@
 import { type ExpressUser } from 'middleware/passport/types';
-import { type List } from 'models/types';
+import { type ListAttributes } from 'models';
 
 interface PageData {
   pageHeading: string
@@ -11,7 +11,7 @@ export interface DashboardPageData extends PageData {
 }
 
 export interface ListsPageData extends PageData {
-  lists: List[]
+  lists: ListAttributes[]
 }
 
 export interface LoginPageData extends PageData {

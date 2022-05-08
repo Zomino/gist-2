@@ -1,7 +1,13 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type List } from './types';
 
-class ListModel extends Model implements List {
+export type ListAttributes = {
+  id?: number,
+  name: string
+}
+
+class List extends Model<ListAttributes> implements ListAttributes {
+  declare id: number;
+
   declare name: string;
 }
 
@@ -16,7 +22,7 @@ function initialize(sequelize: Sequelize) {
 
   const options = { sequelize };
 
-  ListModel.init(attributes, options);
+  return List.init(attributes, options);
 }
 
 export default {
