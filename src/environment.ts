@@ -10,6 +10,10 @@ function getValue(name: string) {
 
 dotenv.config();
 
+const environment = getValue('NODE_ENV');
+export const isDevelopment = environment === 'development';
+export const isProduction = environment === 'production';
+
 export const serverHost = getValue('SERVER_HOST');
 export const serverPort = getValue('SERVER_PORT');
 export const databaseHost = getValue('DATABASE_HOST');
