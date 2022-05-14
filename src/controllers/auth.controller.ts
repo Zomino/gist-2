@@ -1,13 +1,13 @@
-import { type Request, type Response } from 'express';
+import wrapRouteHandler from './helper/wrapRouteHandler';
 
-function redirectHome(_: Request, response: Response) {
+const redirectHome = wrapRouteHandler((_, response) => {
   response.redirect('/');
-}
+});
 
-function logout(req: Request, response: Response) {
-  req.logout();
+const logout = wrapRouteHandler((request, response) => {
+  request.logout();
   response.redirect('/');
-}
+});
 
 export default {
   redirectHome,

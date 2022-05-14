@@ -1,17 +1,17 @@
-import { type Request, type Response } from 'express';
 import { type ListsPageData } from 'views/types';
 import { type ListAttributes } from 'models';
 import { listService } from 'services';
+import wrapRouteHandler from './helper/wrapRouteHandler';
 
-function create(request: Request, response: Response) {
+const create = wrapRouteHandler((request, response) => {
   const body: ListAttributes = request.body;
 
   const newList = listService.create(body);
 
   response.json(newList);
-}
+});
 
-function render(request: Request, response: Response) {
+const render = wrapRouteHandler((request, response) => {
   const user: any = request.user; // any must be used as passport user type is empty object
 
   const lists = listService.getAll(user.id);
@@ -22,7 +22,7 @@ function render(request: Request, response: Response) {
   };
 
   response.render('lists.ejs', data);
-}
+});
 
 export default {
   create,

@@ -1,7 +1,7 @@
-import { type Request, type Response } from 'express';
 import { type DashboardPageData } from 'views/types';
+import wrapRouteHandler from './helper/wrapRouteHandler';
 
-function render(request: Request, response: Response) {
+const render = wrapRouteHandler((request, response) => {
   const data: DashboardPageData = {
     user: request.user,
     logout: 'auth/logout',
@@ -9,7 +9,7 @@ function render(request: Request, response: Response) {
   };
 
   response.render('dashboard.ejs', data);
-}
+});
 
 export default {
   render,
