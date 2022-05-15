@@ -1,11 +1,12 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type User } from './types';
+import { type UserAttributes } from 'common/types';
 
-class UserModel extends Model implements User {
+class User extends Model<UserAttributes> implements UserAttributes {
+  declare id: number;
   declare steamID: string;
 }
 
-function initialize(sequelize: Sequelize) {
+export default function initializeUser(sequelize: Sequelize) {
   const attributes = {
     steamID: {
       type: DataTypes.STRING,
@@ -15,9 +16,5 @@ function initialize(sequelize: Sequelize) {
 
   const options = { sequelize };
 
-  UserModel.init(attributes, options);
+  return User.init(attributes, options);
 }
-
-export default {
-  initialize,
-};

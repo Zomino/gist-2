@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { lists } from 'controllers';
-import { redirect } from 'middleware/passport';
+import { redirectIfNotAuthenticated } from './helper';
 
 const loginRouter = Router();
 
 loginRouter.get(
   '',
-  redirect.ifNotAuthenticated,
+  redirectIfNotAuthenticated,
   lists.render,
 );
 

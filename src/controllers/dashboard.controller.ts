@@ -1,16 +1,12 @@
-import { type DashboardPageData } from 'views/types';
-import { wrapRouteHandler } from './helper';
+import { viewDataService } from 'services';
+import createController from './createController';
 
-const render = wrapRouteHandler((request, response) => {
-  const data: DashboardPageData = {
-    user: request.user,
-    logout: 'auth/logout',
-    pageHeading: 'Dashboard',
-  };
-
-  response.render('dashboard.ejs', data);
+const dashboardController = createController({
+  render: (request, response) => {
+    // If user did not exist they would have been redirected
+    const data = viewDataService.dashboard.getData({ user: request.user! });
+    response.render('dashboard.ejs', data);
+  },
 });
 
-export default {
-  render,
-};
+export default dashboardController;

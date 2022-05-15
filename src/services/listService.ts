@@ -1,7 +1,8 @@
-import { type ListAttributes, sequelize } from 'models';
+import { type ListAttributes } from 'common/types';
+import { List } from 'models';
 
 async function create(listData: ListAttributes) {
-  const newList = await sequelize.models.List.create(listData);
+  const newList = await List.create(listData);
 
   // const newList = list.create(listData as any);
 

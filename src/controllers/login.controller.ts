@@ -1,15 +1,12 @@
-import { type LoginPageData } from 'views/types';
-import { wrapRouteHandler } from './helper';
+import { viewDataService } from 'services';
+import createController from './createController';
 
-const render = wrapRouteHandler((_, response) => {
-  const data: LoginPageData = {
-    pageHeading: 'Login',
-    login: '/auth/login',
-  };
+const loginController = createController({
+  render: (_, response) => {
+    const data = viewDataService.login.getData();
 
-  response.render('login.ejs', data);
+    response.render('login.ejs', data);
+  },
 });
 
-export default {
-  render,
-};
+export default loginController;

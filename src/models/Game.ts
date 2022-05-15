@@ -1,11 +1,12 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type Game } from './types';
+import { type GameAttributes } from 'common/types';
 
-class GameModel extends Model implements Game {
+class Game extends Model<GameAttributes> implements GameAttributes {
+  declare id: number;
   declare name: string;
 }
 
-function initialize(sequelize: Sequelize) {
+export default function initializeGame(sequelize: Sequelize) {
   const attributes = {
     name: {
       type: DataTypes.STRING,
@@ -16,9 +17,5 @@ function initialize(sequelize: Sequelize) {
 
   const options = { sequelize };
 
-  GameModel.init(attributes, options);
+  return Game.init(attributes, options);
 }
-
-export default {
-  initialize,
-};

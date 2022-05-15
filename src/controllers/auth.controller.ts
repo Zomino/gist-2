@@ -1,15 +1,14 @@
-import { wrapRouteHandler } from './helper';
+import createController from './createController';
 
-const redirectHome = wrapRouteHandler((_, response) => {
-  response.redirect('/');
+const authController = createController({
+  redirectHome: (_, response) => {
+    response.redirect('/');
+  },
+
+  logout: (request, response) => {
+    request.logout();
+    response.redirect('/');
+  },
 });
 
-const logout = wrapRouteHandler((request, response) => {
-  request.logout();
-  response.redirect('/');
-});
-
-export default {
-  redirectHome,
-  logout,
-};
+export default authController;

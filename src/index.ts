@@ -1,19 +1,18 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
 import path from 'path';
-import { serverPort } from 'environment';
+import { environment, logger } from 'common';
 import {
   appLogger,
-  router,
   passport,
   session,
 } from 'middleware';
-import { sequelize } from 'models';
-import { logger } from 'services';
+import { database } from 'models';
+import router from 'router';
 
 // Log uncaught errors
-process.on('uncaughtException', (error) => { logger.error(error); });
-process.on('unhandledRejection', (error) => { logger.error(error); });
+process.on('uncaughtException', logger.error);
+process.on('unhandledRejection', logger.error);
 
 const app = express();
 
@@ -36,12 +35,13 @@ app.use(appLogger);
 app.use(router);
 
 (async function bootstrap() {
-  await sequelize.sync();
+  await database.sync();
   logger.info('Models synchronized');
-  await sequelize.authenticate();
+  await database.authenticate();
   logger.info('Connected to database');
 
-  app.listen(serverPort, () => {
-    logger.info(`Server running on port ${serverPort}`);
+  const { server } = environment;
+  app.listen(server.port, () => {
+    logger.info(`Server running on port ${server.port}`);
   });
 }());

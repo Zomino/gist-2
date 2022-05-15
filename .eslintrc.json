@@ -15,11 +15,6 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "no-console": "off",
-        "no-unused-vars": "off",
-        "no-param-reassign": "off",
-        "no-shadow": "off",
-        "prefer-destructuring": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
@@ -27,7 +22,13 @@
                 "js": "never",
                 "ts": "never"
             }
-        ]
+        ],
+        "lines-between-class-members": "off",
+        "no-console": "off",
+        "no-unused-vars": "off",
+        "no-param-reassign": "off",
+        "no-shadow": "off",
+        "prefer-destructuring": "off"
     },
     "settings": {
         "import/resolver": {

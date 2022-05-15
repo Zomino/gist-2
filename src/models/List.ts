@@ -1,17 +1,12 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-
-export type ListAttributes = {
-  id?: number,
-  name: string
-}
+import { type ListAttributes } from 'common/types';
 
 class List extends Model<ListAttributes> implements ListAttributes {
   declare id: number;
-
   declare name: string;
 }
 
-function initialize(sequelize: Sequelize) {
+export default function initializeList(sequelize: Sequelize) {
   const attributes = {
     name: {
       type: DataTypes.STRING,
@@ -24,7 +19,3 @@ function initialize(sequelize: Sequelize) {
 
   return List.init(attributes, options);
 }
-
-export default {
-  initialize,
-};

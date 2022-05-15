@@ -1,31 +1,25 @@
-import { type ListsPageData } from 'views/types';
-import { type ListAttributes } from 'models';
-import { listService } from 'services';
-import { wrapRouteHandler } from './helper';
+import { listService, viewDataService } from 'services';
+import createController from './createController';
 
-const create = wrapRouteHandler((request, response) => {
-  const body: ListAttributes = request.body;
+const listController = createController({
+  create: async (request, response) => {
+    const { body } = request;
 
-  const newList = listService.create(body);
+    const newList = await listService.create(body);
 
-  response.json(newList);
+    response.json(newList);
+  },
+
+  render: (request, response) => {
+    // Any must be used as passport user type is empty object
+    const user: any = request.user;
+
+    const lists = listService.getAll(user.id);
+
+    const data = viewDataService.lists.getData({ lists });
+
+    response.render('lists.ejs', data);
+  },
 });
 
-const render = wrapRouteHandler((request, response) => {
-  // Any must be used as passport user type is empty object
-  const user: any = request.user;
-
-  const lists = listService.getAll(user.id);
-
-  const data: ListsPageData = {
-    pageHeading: 'My Lists',
-    lists,
-  };
-
-  response.render('lists.ejs', data);
-});
-
-export default {
-  create,
-  render,
-};
+export default listController;
