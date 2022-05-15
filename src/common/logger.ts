@@ -1,8 +1,8 @@
 import pino from 'pino';
-import { pinoLogLevel, isDevelopment } from './environment';
+import { pino as pinoConfig, environment } from './environment';
 
-const level = pinoLogLevel || 'info';
-const target = isDevelopment ? 'pino-pretty' : 'pino/file';
+const level = pinoConfig.logLevel || 'info';
+const target = environment.isDevelopment ? 'pino-pretty' : 'pino/file';
 
 const logger = pino({
   formatters: { level: (label) => ({ level: label }) },
