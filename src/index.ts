@@ -1,40 +1,47 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
-import morgan from 'morgan';
 import path from 'path';
-import { session, passport, router } from 'middleware';
-import { sequelize } from 'models';
 import { serverPort } from 'environment';
+import {
+  appLogger,
+  router,
+  passport,
+  session,
+} from 'middleware';
+import { sequelize } from 'models';
+import { logger } from 'services';
+
+// Log uncaught errors
+process.on('uncaughtException', (error) => { logger.error(error); });
+process.on('unhandledRejection', (error) => { logger.error(error); });
 
 const app = express();
 
-// Static Files
 app.use(express.static('src/public'));
 app.use('/css', express.static('css'));
 
-// Views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(expressEjsLayouts);
 
-// Authentication
-app.use(session); // adds user session to req object and sets cookies
+// Adds user session to request object and sets cookies
+app.use(session);
 
 app.use(passport.initialize());
 app.use(express.json());
-app.use(passport.session()); // changes user property on req object from session ID to user object
+// Changes user property on request object from session ID to user object
+app.use(passport.session());
 
-// Other
-app.use(morgan('tiny')); // logs request information
+app.use(appLogger);
 app.use(router);
 
 (async function bootstrap() {
   await sequelize.sync();
-  console.log('Models synchronized');
+  logger.info('Models synchronized');
   await sequelize.authenticate();
-  console.log('Connected to database');
+  logger.info('Connected to database');
 
   app.listen(serverPort, () => {
-    console.log(`Server running on port ${serverPort}`);
+    logger.info(`Server running on port ${serverPort}`);
   });
 }());
