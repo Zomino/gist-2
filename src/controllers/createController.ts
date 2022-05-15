@@ -1,5 +1,5 @@
 import { type RequestHandler } from 'common/types';
-import { type Controller } from 'controllers/types';
+import { type Controller } from './types.controller';
 
 export default function createController(controller: Controller): Controller {
   const routes = Object.entries(controller);

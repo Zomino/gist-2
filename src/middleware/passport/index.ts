@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import { environment } from 'common';
 import { ExpressUser } from 'common/types';
-import { type Validate } from './types';
+import { type Validate } from './types.passport';
 
 passport.serializeUser((user, done) => { done(null, user); });
 passport.deserializeUser((user: ExpressUser, done) => { done(null, user); });

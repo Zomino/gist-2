@@ -1,4 +1,4 @@
-import { type ListsData } from './types';
+import { type ListsData } from './types.viewDataService';
 
 export default {
   getData: (variableData: ListsData) => ({
