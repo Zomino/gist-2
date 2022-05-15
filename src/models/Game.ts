@@ -1,9 +1,11 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type GameAttributes } from 'common/types';
+import { type GameCreationAttributes } from 'common/types';
 
-class Game extends Model<GameAttributes> implements GameAttributes {
+class Game extends Model<GameCreationAttributes> implements GameCreationAttributes {
   declare id: number;
   declare name: string;
+  declare createdAt: string;
+  declare updatedAt: string;
 }
 
 export default function initializeGame(sequelize: Sequelize) {

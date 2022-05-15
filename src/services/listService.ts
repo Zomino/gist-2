@@ -1,10 +1,8 @@
-import { type ListAttributes } from 'common/types';
+import { type ListCreationAttributes } from 'common/types';
 import { List } from 'models';
 
-async function create(listData: ListAttributes) {
+async function create(listData: ListCreationAttributes) {
   const newList = await List.create(listData);
-
-  // const newList = list.create(listData as any);
 
   return newList;
 }

@@ -1,2 +1,2 @@
 export { ExpressUser, RequestHandler, Middleware } from './express.types';
-export { GameAttributes, ListAttributes, UserAttributes } from './models.types';
+export { GameCreationAttributes, ListCreationAttributes, UserCreationAttributes } from './models.types';

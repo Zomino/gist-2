@@ -1,9 +1,11 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type ListAttributes } from 'common/types';
+import { type ListCreationAttributes } from 'common/types';
 
-class List extends Model<ListAttributes> implements ListAttributes {
+class List extends Model<ListCreationAttributes> implements ListCreationAttributes {
   declare id: number;
   declare name: string;
+  declare createdAt: string;
+  declare updatedAt: string;
 }
 
 export default function initializeList(sequelize: Sequelize) {

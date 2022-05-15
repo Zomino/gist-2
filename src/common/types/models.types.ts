@@ -1,12 +1,11 @@
-export type GameAttributes = {
+export type GameCreationAttributes = {
   name: string,
 }
 
-export type ListAttributes = {
-  // id?: number,
+export type ListCreationAttributes = {
   name: string,
 }
 
-export type UserAttributes = {
+export type UserCreationAttributes = {
   steamID: string,
 }
