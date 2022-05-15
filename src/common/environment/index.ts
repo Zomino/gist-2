@@ -1,4 +1,4 @@
-import getValue from './getValue';
+import getValue from './helper';
 
 const environment = getValue('NODE_ENV');
 

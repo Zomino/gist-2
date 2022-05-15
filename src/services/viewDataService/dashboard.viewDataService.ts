@@ -1,4 +1,4 @@
-import { type DashboardData } from './types.viewDataService';
+import { type DashboardData } from './helper/types.viewDataService';
 
 export default {
   getData: (variableData: DashboardData) => ({

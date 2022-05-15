@@ -1,5 +1,5 @@
 import { listService, viewDataService } from 'services';
-import createController from './createController';
+import createController from './helper/createController';
 
 const listController = createController({
   create: async (request, response) => {

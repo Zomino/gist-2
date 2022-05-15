@@ -1,5 +1,5 @@
 import { viewDataService } from 'services';
-import createController from './createController';
+import createController from './helper/createController';
 
 const dashboardController = createController({
   render: (request, response) => {

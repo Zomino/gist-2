@@ -1,5 +1,5 @@
 import { viewDataService } from 'services';
-import createController from './createController';
+import createController from './helper/createController';
 
 const loginController = createController({
   render: (_, response) => {

@@ -1,4 +1,4 @@
-import createController from './createController';
+import createController from './helper/createController';
 
 const authController = createController({
   redirectHome: (_, response) => {
