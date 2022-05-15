@@ -1,5 +1,5 @@
 import { type DashboardPageData } from 'views/types';
-import wrapRouteHandler from './helper/wrapRouteHandler';
+import { wrapRouteHandler } from './helper';
 
 const render = wrapRouteHandler((request, response) => {
   const data: DashboardPageData = {

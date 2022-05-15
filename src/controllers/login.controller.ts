@@ -1,5 +1,5 @@
 import { type LoginPageData } from 'views/types';
-import wrapRouteHandler from './helper/wrapRouteHandler';
+import { wrapRouteHandler } from './helper';
 
 const render = wrapRouteHandler((_, response) => {
   const data: LoginPageData = {

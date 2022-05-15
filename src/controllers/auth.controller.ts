@@ -1,4 +1,4 @@
-import wrapRouteHandler from './helper/wrapRouteHandler';
+import { wrapRouteHandler } from './helper';
 
 const redirectHome = wrapRouteHandler((_, response) => {
   response.redirect('/');

@@ -1,12 +1,12 @@
-import { type RouteHandler } from './types';
+import { type RequestHandler } from 'common/types';
 
 /**
  * Wraps a route handler with a try catch to catch asynchronous errors.
  * @param routeHandler A route handler function to wrap.
  * @returns A wrapped route handler function.
  */
-export default function wrapRouteHandler(routeHandler: RouteHandler): RouteHandler {
-  const wrappedRouteHandler: RouteHandler = (request, response, next) => {
+export function wrapRouteHandler(routeHandler: RequestHandler): RequestHandler {
+  const wrappedRouteHandler: RequestHandler = (request, response, next) => {
     try {
       routeHandler(request, response, next);
     } catch (err) {
@@ -17,3 +17,5 @@ export default function wrapRouteHandler(routeHandler: RouteHandler): RouteHandl
 
   return wrappedRouteHandler;
 }
+
+export default {};

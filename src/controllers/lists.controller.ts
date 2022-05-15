@@ -1,7 +1,7 @@
 import { type ListsPageData } from 'views/types';
 import { type ListAttributes } from 'models';
 import { listService } from 'services';
-import wrapRouteHandler from './helper/wrapRouteHandler';
+import { wrapRouteHandler } from './helper';
 
 const create = wrapRouteHandler((request, response) => {
   const body: ListAttributes = request.body;
@@ -12,7 +12,8 @@ const create = wrapRouteHandler((request, response) => {
 });
 
 const render = wrapRouteHandler((request, response) => {
-  const user: any = request.user; // any must be used as passport user type is empty object
+  // Any must be used as passport user type is empty object
+  const user: any = request.user;
 
   const lists = listService.getAll(user.id);
 
