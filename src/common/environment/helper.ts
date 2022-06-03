@@ -5,7 +5,7 @@ dotenv.config();
 export default function getValue(name: string, required: boolean = true) {
   const value = process.env[name];
 
-  if (!value && required) throw new Error(`Environment variable missing for ${value}.`);
+  if (!value && required) throw new Error(`Environment variable missing for ${name}.`);
 
   return value!;
 }
