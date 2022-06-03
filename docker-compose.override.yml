@@ -1,0 +1,20 @@
+services:
+ app:
+  ports:
+   - 3000:3000
+  volumes:
+   - .:/app
+  command: npm run dev
+
+ database:
+  ports:
+   - 5432:5432
+  volumes:
+   - postgres-data:/var/lib/postgresql/data
+  environment:
+   - POSTGRES_USER=postgres
+   - POSTGRES_PASSWORD=${DATABASE_PASSWORD?}
+   - POSTGRES_DB=gist-2
+
+volumes:
+ postgres-data:

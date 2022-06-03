@@ -1,29 +1,49 @@
 import getValue from './helper';
 
-const environment = getValue('NODE_ENV');
+const isProduction = getValue('IS_PRODUCTION');
+const isDevelopment = !isProduction;
+
+// Default database config requires Postgres to be installed and running locally
+const databaseDialect = getValue('DATABASE_DIALECT') || 'postgres';
+const databaseHost = getValue('DATABASE_HOST') || 'localhost';
+const databaseName = getValue('DATABASE_NAME') || 'gist-2';
+const databasePassword = getValue('DATABASE_PASSWORD', true);
+const databasePort = getValue('DATABASE_PORT') || 5432;
+const databaseUser = getValue('DATABASE_USER') || 'postgres';
+
+const pinoLogLevel = getValue('PINO_LOG_LEVEL') || 'info';
+
+const sessionSecret = isProduction
+  ? getValue('SESSION_SECRET', true)
+  : getValue('SESSION_SECRET') || 'banana';
+
+const serverHost = getValue('SERVER_HOST') || 'localhost';
+const serverPort = getValue('SERVER_PORT') || 3000;
+
+const steamAPIKey = getValue('STEAM_API_KEY', true);
 
 export default {
-  isDevelopment: environment === 'development',
-  isProduction: environment === 'production',
+  isDevelopment,
+  isProduction,
   database: {
-    dialect: getValue('DATABASE_DIALECT'),
-    host: getValue('DATABASE_HOST'),
-    name: getValue('DATABASE_NAME'),
-    password: getValue('DATABASE_PASSWORD'),
-    port: getValue('DATABASE_PORT'),
-    user: getValue('DATABASE_USER'),
+    dialect: databaseDialect,
+    host: databaseHost,
+    name: databaseName,
+    password: databasePassword,
+    port: databasePort,
+    user: databaseUser,
   },
   pino: {
-    logLevel: getValue('PINO_LOG_LEVEL', false),
+    logLevel: pinoLogLevel,
   },
   server: {
-    host: getValue('SERVER_HOST'),
-    port: getValue('SERVER_PORT'),
+    host: serverHost,
+    port: serverPort,
   },
   session: {
-    secret: getValue('SESSION_SECRET'),
+    secret: sessionSecret,
   },
   steamAPI: {
-    key: getValue('STEAM_API_KEY'),
+    key: steamAPIKey,
   },
 };

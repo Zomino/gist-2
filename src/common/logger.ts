@@ -1,7 +1,7 @@
 import pino from 'pino';
 import environment from './environment';
 
-const level = environment.pino.logLevel || 'info';
+const level = environment.pino.logLevel;
 const target = environment.isDevelopment ? 'pino-pretty' : 'pino/file';
 
 const logger = pino({
