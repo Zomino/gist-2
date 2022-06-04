@@ -1,5 +1,10 @@
 {
+  "execMap": {
+    "ts": "node --inspect=0.0.0.0:9229 --nolazy --require ts-node/register"
+  },
   "events": {
     "start": "clear"
-  }
+  },
+  "watch": ["src/**/*.ts"],
+  "verbose": true
 }
