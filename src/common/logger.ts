@@ -11,4 +11,8 @@ const logger = pino({
   transport: { target },
 });
 
+// Pino methods are not bound to their object by default
+logger.error = logger.error.bind(logger);
+logger.info = logger.info.bind(logger);
+
 export default logger;

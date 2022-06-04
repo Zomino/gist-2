@@ -8,5 +8,9 @@
     "baseUrl": "src",
     "outDir": "dist",
     "moduleResolution": "node",
-  }
+    "sourceMap": true
+  },
+  "exclude": [
+    "tutorials"
+  ]
 }
