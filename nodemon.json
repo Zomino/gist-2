@@ -1,9 +1,6 @@
 {
-  "execMap": {
-    "ts": "node --require ts-node/register"
-  },
   "events": {
     "start": "clear"
   },
-  "verbose": true
+  "ignore": ["dist/", "maps/", "README.md"]
 }
