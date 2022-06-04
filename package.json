@@ -4,10 +4,10 @@
   "description": "remake of gist project with authentication and traditional mvc design",
   "scripts": {
     "build": "gulp",
-    "start": "NODE_PATH=dist node --inspect=0.0.0.0:9229 dist/index.js",
-    "start:build": "npm-run-all build start",
-    "dev": "nodemon --exec npm run start:build",
-    "prod": "NODE_ENV=production npm run start:build"
+    "start": "NODE_PATH=dist node dist/index.js",
+    "start:debug": "NODE_PATH=dist node --inspect=0.0.0.0:9229 dist/index.js",
+    "dev": "nodemon --exec npm-run-all build start:debug",
+    "prod": "NODE_ENV=production npm-run-all build start"
   },
   "author": "zou minowa",
   "license": "ISC",
