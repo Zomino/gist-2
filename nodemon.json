@@ -1,6 +1,7 @@
 {
+  "ext": "ts, ejs",
   "events": {
     "start": "clear"
   },
-  "ignore": ["dist/", "maps/", "README.md"]
+  "ignore": ["dist/", "README.md"]
 }
