@@ -1,5 +1,6 @@
 services:
  app:
+  image: gist-2_app:dev
   ports:
    - 3000:3000
    - 9229:9229
