@@ -1,5 +1,5 @@
 {
-  "ext": "ts, ejs",
+  "ext": "ts, ejs, css",
   "events": {
     "start": "clear"
   },
