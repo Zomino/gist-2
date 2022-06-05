@@ -10,4 +10,14 @@ export type RequestHandler = (
   next: NextFunction,
 ) => void
 
-export type Middleware = RequestHandler
+export type GameCreationAttributes = {
+  name: string,
+}
+
+export type ListCreationAttributes = {
+  name: string,
+}
+
+export type UserCreationAttributes = {
+  steamID: string,
+}

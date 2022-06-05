@@ -1,5 +1,6 @@
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
+
 import { environment } from 'common';
 import { ExpressUser } from 'common/types';
 

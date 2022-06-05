@@ -1,5 +1,6 @@
 import pino from 'pino';
 import pinoHttp from 'pino-http';
+
 import environment from './environment';
 
 const level = environment.pino.logLevel;
