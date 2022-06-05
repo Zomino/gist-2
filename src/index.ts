@@ -3,7 +3,6 @@ import expressEjsLayouts from 'express-ejs-layouts';
 import path from 'path';
 import { environment, logger } from 'common';
 import {
-  appLogger,
   passport,
   session,
 } from 'middleware';
@@ -31,7 +30,7 @@ app.use(express.json());
 // Changes user property on request object from session ID to user object
 app.use(passport.session());
 
-app.use(appLogger);
+app.use(logger.middleware);
 app.use(router);
 
 (async function bootstrap() {

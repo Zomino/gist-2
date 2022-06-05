@@ -5,6 +5,7 @@
     <%- include('partials/navigation-bar.ejs') %>
   </header>
   <main>
+      <a href="/lists/new/edit">Create new list</a>
       <% lists.forEach((list) => { %>
         <%= list %>
       <% }); %>

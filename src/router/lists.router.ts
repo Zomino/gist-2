@@ -10,6 +10,12 @@ loginRouter.get(
   lists.render,
 );
 
+loginRouter.get(
+  '/:listID/edit',
+  redirectIfNotAuthenticated,
+  lists.renderListPage,
+);
+
 loginRouter.post(
   '',
   // redirect.ifNotAuthenticated,

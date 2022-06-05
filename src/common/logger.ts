@@ -1,7 +1,9 @@
 import pino from 'pino';
+import pinoHttp from 'pino-http';
 import environment from './environment';
 
 const level = environment.pino.logLevel;
+// Log to console in development and file in production
 const target = environment.isDevelopment ? 'pino-pretty' : 'pino/file';
 
 const logger = pino({
@@ -12,7 +14,14 @@ const logger = pino({
 });
 
 // Pino methods are not bound to their object by default
-logger.error = logger.error.bind(logger);
-logger.info = logger.info.bind(logger);
+const logError = logger.error.bind(logger);
+const logInfo = logger.info.bind(logger);
 
-export default logger;
+// Initialize logger middleware
+const loggerMiddleware = pinoHttp({ logger });
+
+export default {
+  error: logError,
+  info: logInfo,
+  middleware: loggerMiddleware,
+};

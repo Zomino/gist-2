@@ -1,4 +1,14 @@
-import getValue from './helper';
+import dotenv from 'dotenv';
+
+function getValue(name: string, required: boolean = false) {
+  const value = process.env[name];
+
+  if (!value && required) throw new Error(`Environment variable missing for ${name}.`);
+
+  return value!;
+}
+
+dotenv.config();
 
 const isProduction = getValue('IS_PRODUCTION');
 const isDevelopment = !isProduction;
