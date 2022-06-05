@@ -1,11 +1,9 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
 import path from 'path';
+
 import { environment, logger } from 'common';
-import {
-  passport,
-  session,
-} from 'middleware';
+import { passport, session } from 'middleware';
 import { database } from 'models';
 import router from 'router';
 

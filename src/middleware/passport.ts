@@ -2,13 +2,23 @@ import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import { environment } from 'common';
 import { ExpressUser } from 'common/types';
-import { type Validate } from './types.passport';
+
+type Profile = {
+  identifier: string,
+}
+
+type Validate = (
+  identifier: string,
+  profile: Profile,
+  done: (err: null, profile: Profile) => void,
+) => void
 
 passport.serializeUser((user, done) => { done(null, user); });
 passport.deserializeUser((user: ExpressUser, done) => { done(null, user); });
 
 const { server, steamAPI } = environment;
 const serverURL = `http://${server.host}:${server.port}`;
+
 const options = {
   returnURL: `${serverURL}/auth/login/return`,
   realm: serverURL,
