@@ -1,4 +1,4 @@
-import { type RequestHandler as Middleware } from 'common/types';
+import { type RequestHandler as Middleware } from 'common';
 
 const redirectIfAuthenticated: Middleware = (request, response, next) => {
   if (request.isAuthenticated()) return response.redirect('/');

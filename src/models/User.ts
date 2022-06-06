@@ -1,5 +1,8 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type UserCreationAttributes } from 'common/types';
+
+export type UserCreationAttributes = {
+  steamID: string,
+}
 
 class User extends Model<UserCreationAttributes> implements UserCreationAttributes {
   declare id: number;

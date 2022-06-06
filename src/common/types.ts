@@ -9,15 +9,3 @@ export type RequestHandler = (
   response: Response,
   next: NextFunction,
 ) => void
-
-export type GameCreationAttributes = {
-  name: string,
-}
-
-export type ListCreationAttributes = {
-  name: string,
-}
-
-export type UserCreationAttributes = {
-  steamID: string,
-}

@@ -1,5 +1,8 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
-import { type GameCreationAttributes } from 'common/types';
+
+type GameCreationAttributes = {
+  name: string,
+}
 
 class Game extends Model<GameCreationAttributes> implements GameCreationAttributes {
   declare id: number;
