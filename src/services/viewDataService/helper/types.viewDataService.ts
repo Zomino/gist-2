@@ -1,9 +1,9 @@
-import { type ExpressUser, type ListCreationAttributes } from 'common/types';
+import { type ExpressUser } from 'common';
 
 export type DashboardData = {
   user: ExpressUser,
 }
 
 export type ListsData = {
-  lists: ListCreationAttributes[],
+  lists: any[],
 }

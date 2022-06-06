@@ -1,16 +1,15 @@
-import { type Request, type Response } from 'express';
+import { type RequestHandler } from 'common';
 import { listService, viewDataService } from 'services';
-import createController from './helper/createController';
 
-async function create(request: Request, response: Response) {
+const create: RequestHandler = async (request, response) => {
   const { body } = request;
 
   const newList = await listService.create(body);
 
   response.json(newList);
-}
+};
 
-async function render(request: Request, response: Response) {
+const render: RequestHandler = async (request, response) => {
   // Any must be used as passport user type is empty object
   const user: any = request.user;
 
@@ -19,9 +18,9 @@ async function render(request: Request, response: Response) {
   const data = viewDataService.lists.getData({ lists });
 
   response.render('lists.ejs', data);
-}
+};
 
-async function renderListPage(request: Request, response: Response) {
+const renderListPage: RequestHandler = async (request, response) => {
   const { listID } = request.params;
 
   let listName;
@@ -44,12 +43,10 @@ async function renderListPage(request: Request, response: Response) {
   // editMode?
 
   response.render('list.ejs', data);
-}
+};
 
-const listController = createController({
+export default {
   create,
   render,
   renderListPage,
-});
-
-export default listController;
+};

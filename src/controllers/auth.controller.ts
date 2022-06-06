@@ -1,14 +1,15 @@
-import createController from './helper/createController';
+import { type RequestHandler } from 'common';
 
-const authController = createController({
-  redirectHome: (_, response) => {
-    response.redirect('/');
-  },
+const logout: RequestHandler = (request, response) => {
+  request.logout();
+  response.redirect('/');
+};
 
-  logout: (request, response) => {
-    request.logout();
-    response.redirect('/');
-  },
-});
+const redirectHome: RequestHandler = (_, response) => {
+  response.redirect('/');
+};
 
-export default authController;
+export default {
+  logout,
+  redirectHome,
+};
