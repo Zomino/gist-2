@@ -4,7 +4,7 @@ import path from 'path';
 
 import { environment, logger } from 'common';
 import { passport, router, session } from 'middleware';
-import { database } from 'models';
+import { sequelize } from 'models';
 
 // Log uncaught errors
 process.on('uncaughtException', logger.error);
@@ -31,9 +31,9 @@ app.use(logger.middleware);
 app.use(router);
 
 (async function bootstrap() {
-  await database.sync();
+  await sequelize.sync();
   logger.info('Models synchronized');
-  await database.authenticate();
+  await sequelize.authenticate();
   logger.info('Connected to database');
 
   const { server } = environment;

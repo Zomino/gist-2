@@ -1,9 +1,31 @@
-import sequelize from './sequelize';
+import { Sequelize, type Dialect } from 'sequelize';
+
+import { environment } from 'common';
+
 import initializeGame from './Game';
 import initializeList from './List';
 import initializeUser from './User';
 
-export const database = sequelize;
+const { database } = environment;
+
+const options = {
+  host: database.host,
+  dialect: database.dialect as Dialect,
+  logging: false,
+  port: Number(database.port),
+  pool: {
+    max: 5,
+    idle: 10000,
+  },
+};
+
+export const sequelize = new Sequelize(
+  database.name,
+  database.user,
+  database.password,
+  options,
+);
+
 export const Game = initializeGame(sequelize);
 export const List = initializeList(sequelize);
 export const User = initializeUser(sequelize);
