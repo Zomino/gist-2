@@ -1,9 +1,9 @@
 import { type RequestHandler } from 'common';
 
-import authHandlers from './auth.controller';
-import dashboardHandlers from './dashboard.controller';
-import listHandlers from './lists.controller';
-import loginHandlers from './login.controller';
+import authHandlers from './auth';
+import dashboardHandlers from './dashboard';
+import listHandlers from './lists';
+import loginHandlers from './login';
 
 type Controller = {
   [key: string]: RequestHandler,
