@@ -1,21 +1,25 @@
 import { type RequestHandler } from 'common';
-import { listService, viewDataService } from 'services';
+import { List } from 'models';
+
+import { type HeadData } from './types';
+
+interface ListsData extends HeadData {
+  lists: string[]
+}
 
 const create: RequestHandler = async (request, response) => {
   const { body } = request;
 
-  const newList = await listService.create(body);
+  const newList = await List.create(body);
 
   response.json(newList);
 };
 
 const render: RequestHandler = async (request, response) => {
-  // Any must be used as passport user type is empty object
-  const user: any = request.user;
-
-  const lists = listService.getAll(user.id);
-
-  const data = viewDataService.lists.getData({ lists });
+  const data: ListsData = {
+    pageHeading: 'Lists',
+    lists: [],
+  };
 
   response.render('lists.ejs', data);
 };

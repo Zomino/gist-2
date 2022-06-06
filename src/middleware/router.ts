@@ -3,19 +3,17 @@ import passport from 'passport';
 
 import {
   auth,
-  dashboard,
+  home,
   lists,
-  login,
 } from 'controllers';
 
-import redirect from './redirect';
+import redirectIfNotAuthenticated from './redirect';
 
 const router = Router();
 
 router.get(
   '/',
-  redirect.redirectIfNotAuthenticated,
-  dashboard.render,
+  home.render,
 );
 
 router.get(
@@ -36,13 +34,13 @@ router.get(
 
 router.get(
   '/lists',
-  redirect.redirectIfNotAuthenticated,
+  redirectIfNotAuthenticated,
   lists.render,
 );
 
 router.get(
   '/lists/:listID/edit',
-  redirect.redirectIfNotAuthenticated,
+  redirectIfNotAuthenticated,
   lists.renderListPage,
 );
 
@@ -50,12 +48,6 @@ router.post(
   '/lists',
   // redirect.ifNotAuthenticated,
   lists.create,
-);
-
-router.get(
-  '/login',
-  redirect.redirectIfAuthenticated,
-  login.render,
 );
 
 export default router;

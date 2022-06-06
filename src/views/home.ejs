@@ -1,0 +1,18 @@
+<head><%- include('partials/head.ejs', { pageHeading }) %></head>
+<body>
+  <header>
+    <%- include('partials/heading-1.ejs') %>
+    <% if (username) { %>
+      <%- include('partials/navigation-bar.ejs') %>
+    <% } %>
+  </header>
+  <main>
+    <% if (username) { %>
+      <p>Hello <%= username %></p>
+      <a href=<%= '/auth/logout' %>>Logout</a>
+    <% } else { %>
+      <a href='/auth/login'>Log in with Steam</a>
+    <% } %>
+  </main>
+  <footer><%- include('partials/copyright-notice.ejs') %></footer>
+</body>

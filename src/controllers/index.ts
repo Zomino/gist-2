@@ -1,9 +1,8 @@
 import { type RequestHandler } from 'common';
 
 import authHandlers from './auth';
-import dashboardHandlers from './dashboard';
+import homeHandlers from './home';
 import listHandlers from './lists';
-import loginHandlers from './login';
 
 type Controller = {
   [key: string]: RequestHandler,
@@ -28,6 +27,5 @@ function createController(controller: Controller): Controller {
 }
 
 export const auth = createController(authHandlers);
-export const dashboard = createController(dashboardHandlers);
+export const home = createController(homeHandlers);
 export const lists = createController(listHandlers);
-export const login = createController(loginHandlers);
