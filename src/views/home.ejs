@@ -2,12 +2,12 @@
 <body>
   <header>
     <%- include('partials/heading-1.ejs') %>
-    <% if (username) { %>
+    <% if (isAuthenticated) { %>
       <%- include('partials/navigation-bar.ejs') %>
     <% } %>
   </header>
   <main>
-    <% if (username) { %>
+    <% if (isAuthenticated) { %>
       <p>Hello <%= username %></p>
       <a href=<%= '/auth/logout' %>>Logout</a>
     <% } else { %>

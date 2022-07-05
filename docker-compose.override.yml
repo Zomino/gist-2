@@ -15,7 +15,7 @@ services:
    - postgres-data:/var/lib/postgresql/data
   environment:
    - POSTGRES_USER=postgres
-   - POSTGRES_PASSWORD=${DATABASE_PASSWORD?}
+   - POSTGRES_PASSWORD=${DATABASE_PASSWORD:?err}
    - POSTGRES_DB=gist-2
 
 volumes:
