@@ -3,3 +3,6 @@ up:
 
 down:
 	docker compose down
+
+psql:
+	docker exec -it database psql -U postgres

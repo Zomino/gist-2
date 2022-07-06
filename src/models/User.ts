@@ -1,25 +1,53 @@
-import { type Sequelize, DataTypes, Model } from 'sequelize';
+import {
+  type Sequelize,
+  type ModelType,
+  DataTypes,
+  Model,
+} from 'sequelize';
 
-export type UserCreationAttributes = {
-  steamID: string,
-}
+import { type User as UserCreationAttributes } from 'common';
+
+import { type FriendsCreationAttributes } from './types';
+
+// Use of deprecated type required for typing
+type FriendsModel = ModelType<FriendsCreationAttributes, FriendsCreationAttributes>;
 
 class User extends Model<UserCreationAttributes> implements UserCreationAttributes {
   declare id: number;
-  declare steamID: string;
+  declare steamId: string;
   declare createdAt: string;
   declare updatedAt: string;
 }
 
-export default function initializeUser(sequelize: Sequelize) {
+// export default function initializeUser(sequelize: Sequelize) {
+export default function initializeUser(sequelize: Sequelize, Friends: FriendsModel) {
   const attributes = {
-    steamID: {
+    steamId: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
   };
-
   const options = { sequelize };
 
-  return User.init(attributes, options);
+  const model = User.init(attributes, options);
+
+  User.belongsToMany(User, {
+    through: Friends,
+    foreignKey: 'userId',
+    as: 'user',
+  });
+  User.belongsToMany(User, {
+    through: Friends,
+    foreignKey: 'friendId',
+    as: 'friend',
+  });
+
+  return model;
 }
+
+/*
+Notes on Associations
+- 'foreignKey' binding ensures Sequelize does not create extra fields
+- 'as' field allows for smart JOIN queries
+*/

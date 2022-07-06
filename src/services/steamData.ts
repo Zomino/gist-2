@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { uniqBy } from 'lodash';
+
 import { type Game, environment } from 'common';
 import { User } from 'models';
 
@@ -30,27 +31,27 @@ function fetch(URLExtension: string, customParams: FetchParams) {
   return axios.get(URL, { params });
 }
 
-async function getFriendIDs(steamID: string) {
+async function getFriendIds(steamId: string) {
   const URLExtension = '/ISteamUser/GetFriendList/v0001/';
   const customParams = {
-    steamid: steamID,
+    steamid: steamId,
   };
 
   const result = await fetch(URLExtension, customParams);
   const friends: Friend[] = result.data.friendslist.friends;
-  const friendIDs = friends.map((friend) => friend.steamid);
+  const friendIds = friends.map((friend) => friend.steamid);
 
-  return friendIDs;
+  return friendIds;
 }
 
-async function getGameInfo(steamIDs: string[]) {
+async function getGameInfo(steamIds: string[]) {
   const URLExtension = '/IPlayerService/GetOwnedGames/v0001/';
 
   const gameInfo = await Promise.all(
-    steamIDs.map(async (steamID) => {
+    steamIds.map(async (steamId) => {
       const customParams = {
         input_json: {
-          steamid: steamID,
+          steamid: steamId,
           include_appinfo: true,
           include_played_free_games: true,
         },
@@ -76,22 +77,22 @@ async function getGameInfo(steamIDs: string[]) {
   return gameInfo;
 }
 
-async function getUserInfo(steamIDs: string[]) {
+async function getUserInfo(steamIds: string[]) {
   const URLExtension = '/ISteamUser/GetPlayerSummaries/v0002/';
 
   // Steam API can only handle up to 100 user IDs at a time
-  const steamIDSets = [];
+  const steamIdSets = [];
   let startIndex = 0;
-  while (startIndex < steamIDs.length) {
-    const steamIDSet = steamIDs.slice(startIndex, startIndex + 100);
-    steamIDSets.push(steamIDSet);
+  while (startIndex < steamIds.length) {
+    const steamIDSet = steamIds.slice(startIndex, startIndex + 100);
+    steamIdSets.push(steamIDSet);
     startIndex += 100;
   }
 
   const userInfo = await Promise.all(
-    steamIDSets.flatMap(async (steamIDSet) => {
+    steamIdSets.flatMap(async (steamIdSet) => {
       const customParams = {
-        steamids: steamIDSet.join(','),
+        steamids: steamIdSet.join(','),
       };
 
       const result = await fetch(URLExtension, customParams);
@@ -110,22 +111,21 @@ async function getUserInfo(steamIDs: string[]) {
   return userInfo;
 }
 
-async function updateFriends(steamID: string, friendIDs: string[]) {
-  // go and define the relationships between the user table and user table to represent friends
-  // fetch friends from database by steam ID
+async function updateFriends(steamid: string, friendIds: string[]) {
+  // fetch friends from database by steam Id
   // find where the friendIDs and database friendIDs overlap
   // delete those relationships from the database
   // upsert the rest of the friend records in the database
 }
 
-async function updateForOneUser(steamID: string) {
-  const friendIDs = await getFriendIDs(steamID);
+async function updateForOneUser(steamId: string) {
+  const friendIds = await getFriendIds(steamId);
 
-  await updateFriends(steamID, friendIDs);
+  await updateFriends(steamId, friendIds);
 
-  const allIDs = [...friendIDs, steamID];
-  const allUserInfo = await getUserInfo(allIDs);
-  const allGameInfo = await getGameInfo(allIDs);
+  const allIds = [...friendIds, steamId];
+  const allUserInfo = await getUserInfo(allIds);
+  const allGameInfo = await getGameInfo(allIds);
   console.log('hi');
 
   // get data for all friends and self

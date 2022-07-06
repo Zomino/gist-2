@@ -13,6 +13,7 @@ type Validate = (
   done: (err: null, profile: Profile) => void,
 ) => void
 
+// TODO: refer to https://stackoverflow.com/questions/27637609/understanding-passport-serialize-deserialize
 passport.serializeUser((user, done) => { done(null, user); });
 passport.deserializeUser((user: ExpressUser, done) => { done(null, user); });
 

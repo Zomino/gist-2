@@ -2,6 +2,7 @@ import { Sequelize, type Dialect } from 'sequelize';
 
 import { environment } from 'common';
 
+import initializeFriends from './Friends';
 import initializeGame from './Game';
 import initializeList from './List';
 import initializeUser from './User';
@@ -11,7 +12,7 @@ const { database } = environment;
 const options = {
   host: database.host,
   dialect: database.dialect as Dialect,
-  logging: false,
+  // logging: false,
   port: Number(database.port),
   pool: {
     max: 5,
@@ -26,9 +27,10 @@ export const sequelize = new Sequelize(
   options,
 );
 
-export const Game = initializeGame(sequelize);
+const Friends = initializeFriends(sequelize);
+// export const Game = initializeGame(sequelize);
 export const List = initializeList(sequelize);
-export const User = initializeUser(sequelize);
+export const User = initializeUser(sequelize, Friends);
 
 /*
 Notes on Models

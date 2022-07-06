@@ -24,14 +24,14 @@ app.use(session);
 
 app.use(passport.initialize());
 app.use(express.json());
-// Changes user property on request object from session ID to user object
+// Changes user property on request object from session Id to user object
 app.use(passport.session());
 
 app.use(logger.middleware);
 app.use(router);
 
 (async function bootstrap() {
-  await sequelize.sync();
+  await sequelize.sync({ force: true });
   logger.info('Models synchronized');
   await sequelize.authenticate();
   logger.info('Connected to database');

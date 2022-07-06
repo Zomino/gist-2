@@ -1,6 +1,7 @@
-import { type RequestHandler, type User } from 'common';
+import { type RequestHandler } from 'common';
 import { steamData } from 'services';
-import { type HeadData } from './types';
+
+import { type HeadData, type User } from './types';
 
 interface DashboardData extends HeadData {
   isAuthenticated: boolean

@@ -1,13 +1,8 @@
 import { type Request, type Response, type NextFunction } from 'express';
 
+// Server
 export type ExpressUser = {
   id?: string,
-}
-
-export type Game = {
-  appid: number,
-  name: string,
-  img_icon_url: string,
 }
 
 export type RequestHandler = (
@@ -16,5 +11,13 @@ export type RequestHandler = (
   next: NextFunction,
 ) => void
 
-// type User must be any as user type used by Passport is an empty object
-export type User = any;
+// Data
+export type Game = {
+  appid: number,
+  name: string,
+  img_icon_url: string,
+}
+
+export type User = {
+  steamId: string,
+}
