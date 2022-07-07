@@ -1,8 +1,8 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
 
-import { type tFriendCreationAttributes } from './types';
+import { type tFriend } from 'common';
 
-class Friend extends Model<tFriendCreationAttributes> implements tFriendCreationAttributes {
+class Friend extends Model<tFriend> implements tFriend {
   declare userId: number;
   declare friendId: number;
 }
@@ -10,18 +10,18 @@ class Friend extends Model<tFriendCreationAttributes> implements tFriendCreation
 export default function initializeFriend(sequelize: Sequelize) {
   const attributes = {
     userId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users',
+        model: 'User',
         key: 'id',
       },
     },
     friendId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Users',
+        model: 'User',
         key: 'id',
       },
     },

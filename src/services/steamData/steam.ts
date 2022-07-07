@@ -3,18 +3,10 @@ import { uniqBy } from 'lodash';
 
 import { type tGame, environment } from 'common';
 
+import { type iUserWithInfo as iPlayer, type tUser as tFriend } from './types';
+
 type tFetchParams = {
   [key: string]: boolean | string | tFetchParams
-}
-
-type tFriend = {
-  steamid: string
-}
-
-interface iPlayer extends tFriend {
-  avatarfull: string
-  personaname: string
-  profileurl: string
 }
 
 function fetch(URLExtension: string, customParams: tFetchParams) {
@@ -30,7 +22,7 @@ function fetch(URLExtension: string, customParams: tFetchParams) {
   return axios.get(URL, { params });
 }
 
-export async function getFriendIds(steamId: string) {
+async function getFriendSteamIds(steamId: string) {
   const URLExtension = '/ISteamUser/GetFriendList/v0001/';
   const customParams = {
     steamid: steamId,
@@ -43,7 +35,7 @@ export async function getFriendIds(steamId: string) {
   return friendIds;
 }
 
-export async function getGameInfo(steamIds: string[]) {
+async function getGameInfo(steamIds: string[]) {
   const URLExtension = '/IPlayerService/GetOwnedGames/v0001/';
 
   return Promise.all(
@@ -74,7 +66,7 @@ export async function getGameInfo(steamIds: string[]) {
     ));
 }
 
-export async function getUserInfo(steamIds: string[]) {
+async function getUserData(steamIds: string[]) {
   const URLExtension = '/ISteamUser/GetPlayerSummaries/v0002/';
 
   // Steam API can only handle up to 100 user IDs at a time
@@ -94,15 +86,21 @@ export async function getUserInfo(steamIds: string[]) {
 
       const result = await fetch(URLExtension, customParams);
       const players = result.data.response.players;
-      const userInfoSet = players.map((player: iPlayer) => ({
+      const userDataSet = players.map((player: iPlayer) => ({
         avatarfull: player.avatarfull,
         personaname: player.personaname,
         profileurl: player.profileurl,
         steamid: player.steamid,
       }));
 
-      return userInfoSet;
+      return userDataSet;
     }),
   )
-    .then((userInfoSets) => userInfoSets.flat());
+    .then((userDataSets) => userDataSets.flat());
 }
+
+export default {
+  getFriendSteamIds,
+  getGameInfo,
+  getUserData,
+};

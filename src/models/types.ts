@@ -1,9 +1,5 @@
 import { type ModelType } from 'sequelize';
-
-export type tFriendCreationAttributes = {
-  userId: number,
-  friendId: number,
-}
+import { type tFriend } from 'common';
 
 // Use of deprecated type required for typing
-export type tFriendModel = ModelType<tFriendCreationAttributes, tFriendCreationAttributes>;
+export type tFriendModel = ModelType<tFriend, tFriend>;

@@ -14,9 +14,21 @@ export type tGame = {
   img_icon_url: string,
 }
 
-export type tUser = {
+// Creation attributes are the properties required in model create methods
+export type tFriend = {
+  userId: number,
+  friendId: number,
+}
+
+export type tUserCreationAttributes = {
+  username: string,
+  steamId: string,
   avatarURL: string,
   profileURL: string,
-  steamId: string,
-  username: string,
+}
+
+export interface iUser extends tUserCreationAttributes {
+  id: number
+  createdAt: string
+  updatedAt: string
 }

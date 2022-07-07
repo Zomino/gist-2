@@ -1,4 +1,4 @@
-import { type tRequestHandler, tUser } from 'common';
+import { type tRequestHandler, iUser } from 'common';
 import { steamData } from 'services';
 
 import { type tHeadData } from './types';
@@ -13,7 +13,7 @@ const render: tRequestHandler = async (request, response) => {
 
   let data: iDashboardData;
   if (isAuthenticated) {
-    const user = request.user as tUser;
+    const user = request.user as iUser;
 
     // Update database with latest steam data for current user
     await steamData.updateForOneUser(user.steamId);

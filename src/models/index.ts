@@ -32,8 +32,6 @@ export const Friend = initializeFriend(sequelize);
 export const List = initializeList(sequelize);
 export const User = initializeUser(sequelize, Friend);
 
-export { type tFriendModel } from './types';
-
 /*
 Notes on Models
 - Extending (e.g. class List extends Model<ListAttributes>)

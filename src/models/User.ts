@@ -4,39 +4,49 @@ import {
   Model,
 } from 'sequelize';
 
-import { type tUser as tUserCreationAttributes } from 'common';
+import { type iUser, type tUserCreationAttributes } from 'common';
 
 import { type tFriendModel } from './types';
 
-class User extends Model<tUserCreationAttributes> implements tUserCreationAttributes {
+/*
+Model generic type adds all read properties on the model type
+Implements type informs compiler that property exists on instances
+Both must be present to avoid typing errors
+*/
+class User extends Model<iUser, tUserCreationAttributes> implements iUser {
+  // Custom
+  declare username: string;
+  declare steamId: string;
+  declare avatarURL: string;
+  declare profileURL: string;
+
   // Auto-generated
   declare id: number;
   declare createdAt: string;
   declare updatedAt: string;
-
-  // Custom
-  declare avatarURL: string;
-  declare profileURL: string;
-  declare steamId: string;
-  declare username: string;
-
-  // For joins
-  declare friends: string[];
+  declare friends: iUser[];
 }
 
 export default function initializeUser(sequelize: Sequelize, Friend: tFriendModel) {
   const attributes = {
-    avatarURL: DataTypes.STRING,
-    profileURL: DataTypes.STRING,
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     steamId: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    avatarURL: DataTypes.STRING,
+    profileURL: DataTypes.STRING,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   };
   const options = { sequelize };
 

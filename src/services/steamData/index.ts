@@ -1,23 +1,15 @@
 import { User } from 'models';
-import { updateFriends } from './helper';
-import { getFriendIds, getGameInfo, getUserInfo } from './steam';
+import { syncFriends, syncGameData, syncUserData } from './helper';
+import steam from './steam';
 
 async function updateForOneUser(steamId: string) {
-  const friendIds = await getFriendIds(steamId);
-
-  await updateFriends(steamId, friendIds);
-
-  const allIds = [...friendIds, steamId];
-  const allUserInfo = await getUserInfo(allIds);
-  const allGameInfo = await getGameInfo(allIds);
-
-  // get data for all friends and self
-  // get game data for all friends and self
-  // store in database
+  await syncFriends(steamId);
+  await syncUserData(steamId);
+  await syncGameData(steamId);
 }
 
 async function createUser(steamId: string) {
-  const [userInfo] = await getUserInfo([steamId]);
+  const [userInfo] = await steam.getUserData([steamId]);
   return User.create({
     avatarURL: userInfo.avatarfull,
     profileURL: userInfo.profileurl,
