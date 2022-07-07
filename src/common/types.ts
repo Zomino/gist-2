@@ -1,10 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
 
 // Server
-export type tExpressUser = {
-  id?: string,
-}
-
 export type tRequestHandler = (
   request: Request,
   response: Response,
@@ -19,5 +15,8 @@ export type tGame = {
 }
 
 export type tUser = {
+  avatarURL: string,
+  profileURL: string,
   steamId: string,
+  username: string,
 }

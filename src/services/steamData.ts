@@ -48,7 +48,7 @@ async function getFriendIds(steamId: string) {
 async function getGameInfo(steamIds: string[]) {
   const URLExtension = '/IPlayerService/GetOwnedGames/v0001/';
 
-  const gameInfo = await Promise.all(
+  return Promise.all(
     steamIds.map(async (steamId) => {
       const customParams = {
         input_json: {
@@ -74,8 +74,6 @@ async function getGameInfo(steamIds: string[]) {
         img_icon_url: game.img_icon_url,
       }))
     ));
-
-  return gameInfo;
 }
 
 async function getUserInfo(steamIds: string[]) {
@@ -90,8 +88,8 @@ async function getUserInfo(steamIds: string[]) {
     startIndex += 100;
   }
 
-  const userInfo = await Promise.all(
-    steamIdSets.flatMap(async (steamIdSet) => {
+  return Promise.all(
+    steamIdSets.map(async (steamIdSet) => {
       const customParams = {
         steamids: steamIdSet.join(','),
       };
@@ -107,35 +105,39 @@ async function getUserInfo(steamIds: string[]) {
 
       return userInfoSet;
     }),
-  );
-
-  return userInfo;
+  )
+    .then((userInfoSets) => userInfoSets.flat());
 }
+
+// async function updateUser(steamId: string) {
+// }
 
 async function updateFriends(steamId: string, steamFriendIds: string[]) {
   // TESTING
-  const zou = await User.create({
-    steamId,
-  });
+  // const zou = await User.create({
+  //   steamId,
+  // });
 
-  const angela = await User.create({
-    steamId: '76561198869885446',
-  });
+  // const angela = await User.create({
+  //   steamId: '76561198869885446',
+  // });
 
-  await Friend.create({
-    userId: zou.id,
-    friendId: angela.id,
-  });
+  // await Friend.create({
+  //   userId: zou.id,
+  //   friendId: angela.id,
+  // });
 
   const user = await User.findOne({
     include: {
       model: User,
-      as: 'friend',
+      as: 'friends',
     },
     where: { steamId },
   });
   // TESTING
+  const friends = user?.friends;
 
+  console.log(user?.toJSON());
   // const friendIds = user.map((friend) => friend.steamId);
   // const missingFriendIds = friendIds.filter((friendId) => (
   //   !steamFriendIds.includes(friendId)
@@ -156,6 +158,17 @@ async function updateForOneUser(steamId: string) {
   // store in database
 }
 
+async function createUser(steamId: string) {
+  const [userInfo] = await getUserInfo([steamId]);
+  return User.create({
+    avatarURL: userInfo.avatarfull,
+    profileURL: userInfo.profileurl,
+    steamId: userInfo.steamid,
+    username: userInfo.personaname,
+  });
+}
+
 export default {
+  createUser,
   updateForOneUser,
 };

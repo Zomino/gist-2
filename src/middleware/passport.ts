@@ -1,7 +1,9 @@
 import passport from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 
-import { type tExpressUser, environment } from 'common';
+import { environment } from 'common';
+import { User } from 'models';
+import { steamData } from 'services';
 
 type tProfile = {
   identifier: string,
@@ -13,9 +15,21 @@ type tValidate = (
   done: (err: null, profile: tProfile) => void,
 ) => void
 
-// TODO: refer to https://stackoverflow.com/questions/27637609/understanding-passport-serialize-deserialize
-passport.serializeUser((user, done) => { done(null, user); });
-passport.deserializeUser((user: tExpressUser, done) => { done(null, user); });
+// Type must be any as user type used by Passport is an empty object
+passport.serializeUser(async (authUser: any, done) => {
+  const user = await User.findOne({ where: { steamId: authUser.id } });
+
+  if (user) done(null, user.id);
+
+  // If user does not exist in database, fetch data from Steam and create
+  const newUser = await steamData.createUser(authUser.id);
+  done(null, newUser.id);
+});
+
+passport.deserializeUser(async (userId: number, done) => {
+  const user = await User.findByPk(userId, { attributes: { exclude: ['profileURL'] } });
+  done(null, user);
+});
 
 const { server, steamAPI } = environment;
 const serverURL = `http://${server.host}:${server.port}`;

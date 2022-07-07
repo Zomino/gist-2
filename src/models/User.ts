@@ -9,18 +9,33 @@ import { type tUser as tUserCreationAttributes } from 'common';
 import { type tFriendModel } from './types';
 
 class User extends Model<tUserCreationAttributes> implements tUserCreationAttributes {
+  // Auto-generated
   declare id: number;
-  declare steamId: string;
   declare createdAt: string;
   declare updatedAt: string;
+
+  // Custom
+  declare avatarURL: string;
+  declare profileURL: string;
+  declare steamId: string;
+  declare username: string;
+
+  // For joins
+  declare friends: string[];
 }
 
 export default function initializeUser(sequelize: Sequelize, Friend: tFriendModel) {
   const attributes = {
+    avatarURL: DataTypes.STRING,
+    profileURL: DataTypes.STRING,
     steamId: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   };
   const options = { sequelize };
@@ -31,13 +46,13 @@ export default function initializeUser(sequelize: Sequelize, Friend: tFriendMode
     through: Friend,
     foreignKey: 'userId',
     otherKey: 'friendId',
-    as: 'friend',
+    as: 'friends',
   });
   User.belongsToMany(User, {
     through: Friend,
     foreignKey: 'friendId',
     otherKey: 'userId',
-    as: 'user',
+    as: 'users',
   });
 
   return model;

@@ -1,6 +1,6 @@
 import { Sequelize, type Dialect } from 'sequelize';
 
-import { environment } from 'common';
+import { environment, logger } from 'common';
 
 import initializeFriend from './Friend';
 import initializeGame from './Game';
@@ -12,7 +12,7 @@ const { database } = environment;
 const options = {
   host: database.host,
   dialect: database.dialect as Dialect,
-  logging: false,
+  logging: logger.info,
   port: Number(database.port),
   pool: {
     max: 5,
