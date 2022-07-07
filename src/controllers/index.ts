@@ -1,17 +1,17 @@
-import { type RequestHandler } from 'common';
+import { type tRequestHandler } from 'common';
 
 import authHandlers from './auth';
 import homeHandlers from './home';
 import listHandlers from './lists';
 
-type Controller = {
-  [key: string]: RequestHandler,
+type tController = {
+  [key: string]: tRequestHandler,
 }
 
-function createController(controller: Controller): Controller {
+function createController(controller: tController): tController {
   const routes = Object.entries(controller);
   routes.forEach(([name, handler]) => {
-    const wrappedHandler: RequestHandler = (request, response, next) => {
+    const wrappedHandler: tRequestHandler = (request, response, next) => {
       try {
         handler(request, response, next);
       } catch (err) {

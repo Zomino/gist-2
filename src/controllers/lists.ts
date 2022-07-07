@@ -1,13 +1,13 @@
-import { type RequestHandler } from 'common';
+import { type tRequestHandler } from 'common';
 import { List } from 'models';
 
-import { type HeadData } from './types';
+import { type tHeadData } from './types';
 
-interface ListsData extends HeadData {
+interface iListsData extends tHeadData {
   lists: string[]
 }
 
-const create: RequestHandler = async (request, response) => {
+const create: tRequestHandler = async (request, response) => {
   const { body } = request;
 
   const newList = await List.create(body);
@@ -15,8 +15,8 @@ const create: RequestHandler = async (request, response) => {
   response.json(newList);
 };
 
-const render: RequestHandler = async (request, response) => {
-  const data: ListsData = {
+const render: tRequestHandler = async (request, response) => {
+  const data: iListsData = {
     pageHeading: 'Lists',
     lists: [],
   };
@@ -24,7 +24,7 @@ const render: RequestHandler = async (request, response) => {
   response.render('lists.ejs', data);
 };
 
-const renderListPage: RequestHandler = async (request, response) => {
+const renderListPage: tRequestHandler = async (request, response) => {
   const { listID } = request.params;
 
   let listName;

@@ -1,19 +1,19 @@
-import { type RequestHandler } from 'common';
+import { type tRequestHandler } from 'common';
 import { steamData } from 'services';
 
-import { type HeadData, type User } from './types';
+import { type tHeadData, type tUser } from './types';
 
-interface DashboardData extends HeadData {
+interface iDashboardData extends tHeadData {
   isAuthenticated: boolean
   username: string
 }
 
-const render: RequestHandler = async (request, response) => {
+const render: tRequestHandler = async (request, response) => {
   const isAuthenticated = request.isAuthenticated();
 
-  let data: DashboardData;
+  let data: iDashboardData;
   if (isAuthenticated) {
-    const user: User = request.user;
+    const user: tUser = request.user;
 
     // Update database with latest steam data for current user
     await steamData.updateForOneUser(user.id);

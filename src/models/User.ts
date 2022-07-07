@@ -1,26 +1,21 @@
 import {
   type Sequelize,
-  type ModelType,
   DataTypes,
   Model,
 } from 'sequelize';
 
-import { type User as UserCreationAttributes } from 'common';
+import { type tUser as tUserCreationAttributes } from 'common';
 
-import { type FriendsCreationAttributes } from './types';
+import { type tFriendModel } from './types';
 
-// Use of deprecated type required for typing
-type FriendsModel = ModelType<FriendsCreationAttributes, FriendsCreationAttributes>;
-
-class User extends Model<UserCreationAttributes> implements UserCreationAttributes {
+class User extends Model<tUserCreationAttributes> implements tUserCreationAttributes {
   declare id: number;
   declare steamId: string;
   declare createdAt: string;
   declare updatedAt: string;
 }
 
-// export default function initializeUser(sequelize: Sequelize) {
-export default function initializeUser(sequelize: Sequelize, Friends: FriendsModel) {
+export default function initializeUser(sequelize: Sequelize, Friend: tFriendModel) {
   const attributes = {
     steamId: {
       type: DataTypes.STRING,
@@ -33,14 +28,16 @@ export default function initializeUser(sequelize: Sequelize, Friends: FriendsMod
   const model = User.init(attributes, options);
 
   User.belongsToMany(User, {
-    through: Friends,
+    through: Friend,
     foreignKey: 'userId',
-    as: 'user',
+    otherKey: 'friendId',
+    as: 'friend',
   });
   User.belongsToMany(User, {
-    through: Friends,
+    through: Friend,
     foreignKey: 'friendId',
-    as: 'friend',
+    otherKey: 'userId',
+    as: 'user',
   });
 
   return model;

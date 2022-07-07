@@ -1,24 +1,25 @@
 import axios from 'axios';
 import { uniqBy } from 'lodash';
 
-import { type Game, environment } from 'common';
-import { User } from 'models';
+import { type tGame, environment } from 'common';
+// import { type tFriendModel, Friend, User } from 'models';
+import { type tFriendModel, Friend, User } from 'models';
 
-type FetchParams = {
-  [key: string]: boolean | string | FetchParams
+type tFetchParams = {
+  [key: string]: boolean | string | tFetchParams
 }
 
-type Friend = {
+type tFriend = {
   steamid: string
 }
 
-interface Player extends Friend {
+interface iPlayer extends tFriend {
   avatarfull: string
   personaname: string
   profileurl: string
 }
 
-function fetch(URLExtension: string, customParams: FetchParams) {
+function fetch(URLExtension: string, customParams: tFetchParams) {
   const baseURL = 'http://api.steampowered.com';
   const baseParams = { key: environment.steamAPI.key };
 
@@ -38,7 +39,7 @@ async function getFriendIds(steamId: string) {
   };
 
   const result = await fetch(URLExtension, customParams);
-  const friends: Friend[] = result.data.friendslist.friends;
+  const friends: tFriend[] = result.data.friendslist.friends;
   const friendIds = friends.map((friend) => friend.steamid);
 
   return friendIds;
@@ -67,7 +68,7 @@ async function getGameInfo(steamIds: string[]) {
     .then((gameCollections) => gameCollections.flat())
     .then((games) => uniqBy(games, 'appid'))
     .then((games) => (
-      games.map((game: Game) => ({
+      games.map((game: tGame) => ({
         appid: game.appid,
         name: game.name,
         img_icon_url: game.img_icon_url,
@@ -97,7 +98,7 @@ async function getUserInfo(steamIds: string[]) {
 
       const result = await fetch(URLExtension, customParams);
       const players = result.data.response.players;
-      const userInfoSet = players.map((player: Player) => ({
+      const userInfoSet = players.map((player: iPlayer) => ({
         avatarfull: player.avatarfull,
         personaname: player.personaname,
         profileurl: player.profileurl,
@@ -111,11 +112,34 @@ async function getUserInfo(steamIds: string[]) {
   return userInfo;
 }
 
-async function updateFriends(steamid: string, friendIds: string[]) {
-  // fetch friends from database by steam Id
-  // find where the friendIDs and database friendIDs overlap
-  // delete those relationships from the database
-  // upsert the rest of the friend records in the database
+async function updateFriends(steamId: string, steamFriendIds: string[]) {
+  // TESTING
+  const zou = await User.create({
+    steamId,
+  });
+
+  const angela = await User.create({
+    steamId: '76561198869885446',
+  });
+
+  await Friend.create({
+    userId: zou.id,
+    friendId: angela.id,
+  });
+
+  const user = await User.findOne({
+    include: {
+      model: User,
+      as: 'friend',
+    },
+    where: { steamId },
+  });
+  // TESTING
+
+  // const friendIds = user.map((friend) => friend.steamId);
+  // const missingFriendIds = friendIds.filter((friendId) => (
+  //   !steamFriendIds.includes(friendId)
+  // ));
 }
 
 async function updateForOneUser(steamId: string) {
@@ -126,7 +150,6 @@ async function updateForOneUser(steamId: string) {
   const allIds = [...friendIds, steamId];
   const allUserInfo = await getUserInfo(allIds);
   const allGameInfo = await getGameInfo(allIds);
-  console.log('hi');
 
   // get data for all friends and self
   // get game data for all friends and self

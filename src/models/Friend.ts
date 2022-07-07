@@ -1,13 +1,13 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
 
-import { type FriendsCreationAttributes } from './types';
+import { type tFriendCreationAttributes } from './types';
 
-class Friend extends Model<FriendsCreationAttributes> implements FriendsCreationAttributes {
+class Friend extends Model<tFriendCreationAttributes> implements tFriendCreationAttributes {
   declare userId: number;
   declare friendId: number;
 }
 
-export default function initializeFriends(sequelize: Sequelize) {
+export default function initializeFriend(sequelize: Sequelize) {
   const attributes = {
     userId: {
       type: DataTypes.NUMBER,

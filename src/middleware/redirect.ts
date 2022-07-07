@@ -1,6 +1,6 @@
-import { type RequestHandler as Middleware } from 'common';
+import { type tRequestHandler as tMiddleware } from 'common';
 
-const redirectIfNotAuthenticated: Middleware = (request, response, next) => {
+const redirectIfNotAuthenticated: tMiddleware = (request, response, next) => {
   if (!request.isAuthenticated()) return response.redirect('/');
   return next();
 };

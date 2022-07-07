@@ -1,10 +1,10 @@
 import { type Sequelize, DataTypes, Model } from 'sequelize';
 
-type ListCreationAttributes = {
+type tListCreationAttributes = {
   name: string,
 }
 
-class List extends Model<ListCreationAttributes> implements ListCreationAttributes {
+class List extends Model<tListCreationAttributes> implements tListCreationAttributes {
   declare id: number;
   declare name: string;
   declare createdAt: string;

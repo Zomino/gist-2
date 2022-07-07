@@ -31,7 +31,8 @@ app.use(logger.middleware);
 app.use(router);
 
 (async function bootstrap() {
-  await sequelize.sync({ force: true });
+  const options = environment.isDevelopment ? { force: true } : {};
+  await sequelize.sync(options);
   logger.info('Models synchronized');
   await sequelize.authenticate();
   logger.info('Connected to database');

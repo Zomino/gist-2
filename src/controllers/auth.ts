@@ -1,11 +1,11 @@
-import { type RequestHandler } from 'common';
+import { type tRequestHandler } from 'common';
 
-const logout: RequestHandler = (request, response) => {
+const logout: tRequestHandler = (request, response) => {
   request.logout();
   response.redirect('/');
 };
 
-const redirectHome: RequestHandler = (_, response) => {
+const redirectHome: tRequestHandler = (_, response) => {
   response.redirect('/');
 };
 
