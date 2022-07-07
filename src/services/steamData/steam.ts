@@ -2,8 +2,6 @@ import axios from 'axios';
 import { uniqBy } from 'lodash';
 
 import { type tGame, environment } from 'common';
-// import { type tFriendModel, Friend, User } from 'models';
-import { type tFriendModel, Friend, User } from 'models';
 
 type tFetchParams = {
   [key: string]: boolean | string | tFetchParams
@@ -32,7 +30,7 @@ function fetch(URLExtension: string, customParams: tFetchParams) {
   return axios.get(URL, { params });
 }
 
-async function getFriendIds(steamId: string) {
+export async function getFriendIds(steamId: string) {
   const URLExtension = '/ISteamUser/GetFriendList/v0001/';
   const customParams = {
     steamid: steamId,
@@ -45,7 +43,7 @@ async function getFriendIds(steamId: string) {
   return friendIds;
 }
 
-async function getGameInfo(steamIds: string[]) {
+export async function getGameInfo(steamIds: string[]) {
   const URLExtension = '/IPlayerService/GetOwnedGames/v0001/';
 
   return Promise.all(
@@ -76,7 +74,7 @@ async function getGameInfo(steamIds: string[]) {
     ));
 }
 
-async function getUserInfo(steamIds: string[]) {
+export async function getUserInfo(steamIds: string[]) {
   const URLExtension = '/ISteamUser/GetPlayerSummaries/v0002/';
 
   // Steam API can only handle up to 100 user IDs at a time
@@ -108,67 +106,3 @@ async function getUserInfo(steamIds: string[]) {
   )
     .then((userInfoSets) => userInfoSets.flat());
 }
-
-// async function updateUser(steamId: string) {
-// }
-
-async function updateFriends(steamId: string, steamFriendIds: string[]) {
-  // TESTING
-  // const zou = await User.create({
-  //   steamId,
-  // });
-
-  // const angela = await User.create({
-  //   steamId: '76561198869885446',
-  // });
-
-  // await Friend.create({
-  //   userId: zou.id,
-  //   friendId: angela.id,
-  // });
-
-  const user = await User.findOne({
-    include: {
-      model: User,
-      as: 'friends',
-    },
-    where: { steamId },
-  });
-  // TESTING
-  const friends = user?.friends;
-
-  console.log(user?.toJSON());
-  // const friendIds = user.map((friend) => friend.steamId);
-  // const missingFriendIds = friendIds.filter((friendId) => (
-  //   !steamFriendIds.includes(friendId)
-  // ));
-}
-
-async function updateForOneUser(steamId: string) {
-  const friendIds = await getFriendIds(steamId);
-
-  await updateFriends(steamId, friendIds);
-
-  const allIds = [...friendIds, steamId];
-  const allUserInfo = await getUserInfo(allIds);
-  const allGameInfo = await getGameInfo(allIds);
-
-  // get data for all friends and self
-  // get game data for all friends and self
-  // store in database
-}
-
-async function createUser(steamId: string) {
-  const [userInfo] = await getUserInfo([steamId]);
-  return User.create({
-    avatarURL: userInfo.avatarfull,
-    profileURL: userInfo.profileurl,
-    steamId: userInfo.steamid,
-    username: userInfo.personaname,
-  });
-}
-
-export default {
-  createUser,
-  updateForOneUser,
-};
